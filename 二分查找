@@ -11,3 +11,19 @@ class Solution:
             elif target > nums[mid]:
                 left = mid + 1
         return -1
+# 左闭右开区间
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left, right = 0, len(nums)
+        # 右侧开区间则左右不可相等
+        while left < right:
+            mid = (left + right) // 2
+            if target == nums[mid]:
+                return mid
+            elif target < nums[mid]:
+                # 因为此时右侧是开区间，取不到，防止遗漏元素，右侧需要到mid
+                right = mid
+            else:
+                # 因为左侧是闭区间，而mid对应的元素已经确认不是target, 应该从其后面一个开始
+                left = mid + 1
+        return -1
