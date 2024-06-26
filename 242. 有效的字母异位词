@@ -1,0 +1,19 @@
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        letter = [0] * 26
+        for i in s:
+            letter[ord(i) - ord('a')] += 1
+        for i in t:
+            letter[ord(i) - ord('a')] -= 1
+        for i in range(26):
+            if letter[i] != 0:
+                return False
+        else:
+            return True
+# 使用Counter
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        from collections import Counter
+        s_count = Counter(s)
+        t_count = Counter(t)
+        return s_count == t_count
