@@ -1,0 +1,17 @@
+# https://leetcode.cn/problems/intersection-of-two-arrays/description/
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        return list(set(nums1) & set(nums2))
+
+
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        intersection = set()
+        dic_nums1 = {}
+        for i in nums1:
+            dic_nums1[i] = i
+        for i in nums2:
+            if i in dic_nums1:
+                intersection.add(i)
+        return list(intersection)
+
