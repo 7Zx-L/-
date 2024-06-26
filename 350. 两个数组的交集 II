@@ -1,0 +1,12 @@
+# https://leetcode.cn/problems/intersection-of-two-arrays-ii/description/
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        intersection = []
+        dic_nums1 = {}
+        for i in nums1:
+            dic_nums1[i] = dic_nums1.get(i, 0) + 1
+        for i in nums2:
+            if i in dic_nums1 and dic_nums1[i] != 0:
+                intersection.append(i)
+                dic_nums1[i] -= 1
+        return intersection
