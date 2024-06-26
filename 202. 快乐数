@@ -1,0 +1,15 @@
+# https://leetcode.cn/problems/happy-number/
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        record = []
+        while n not in record:
+            record.append(n)
+            sum_ = 0
+            str_n = str(n)
+            for i in str_n:
+                sum_ += int(i) * int(i)
+            if sum_ == 1:
+                return True
+            else:
+                n = sum_
+        return False
