@@ -1,0 +1,16 @@
+# https://leetcode.cn/problems/4sum-ii/description/
+class Solution:
+    def fourSumCount(self, nums1: List[int], nums2: List[int], nums3: List[int], nums4: List[int]) -> int:
+        sum_1_2 = {}
+        for n1 in nums1:
+            for n2 in nums2:
+                if n1 + n2 in sum_1_2:
+                    sum_1_2[n1 + n2] += 1
+                else:
+                    sum_1_2[n1 + n2] = 1
+        count = 0
+        for n3 in nums3:
+            for n4 in nums4:
+                if -n3 - n4 in sum_1_2:
+                    count += sum_1_2[-n3 - n4]
+        return count
