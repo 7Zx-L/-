@@ -18,15 +18,19 @@ class Solution:
         skip_s = skip_t = 0
         while i >= 0 or j >= 0:
             while i >= 0:
+            # 这里的逻辑是倒叙往回看，如果这个元素是‘#’skip就更新，同时指针左移，跳过这个元素
                 if s[i] == '#':
                     skip_s += 1
                     i -= 1
+            # 如果这个元素不是‘#’，且此时skip不为零，开始skip,积累了多少skip就跳过多少元素
                 elif skip_s > 0:
                     skip_s -= 1
                     i -= 1
+            # 如果这个元素不是‘#’且没有skip,不需要跳过元素，则跳出循环，此时应该停在了新的最后输出的结果一个元素
                 else:
                     break
             while j >= 0:
+            # 一样的逻辑
                 if t[j] == '#':
                     skip_t += 1
                     j -= 1
@@ -35,9 +39,11 @@ class Solution:
                     j -= 1
                 else:
                     break
+            # 这里的逻辑是倒叙往回看，如果这个元素是‘#’skip就更新，同时指针左移，跳过这个元素
             if i >= 0 and j >= 0:
                 if s[i] != t[j]:
                     return False
+           # 如果只有一个没处理完，另一个处理完了
             elif i >= 0 or j >= 0:
                 return False
             i -= 1
