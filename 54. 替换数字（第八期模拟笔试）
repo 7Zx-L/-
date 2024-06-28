@@ -1,0 +1,9 @@
+# https://kamacoder.com/problempage.php?pid=1064
+s = input()   
+def substitute(s):
+    lst = list(s)
+    for i in range(len(lst)):
+        if lst[i].isdigit():
+            lst[i] = 'number'
+    return "".join(lst)
+print(substitute(s))
