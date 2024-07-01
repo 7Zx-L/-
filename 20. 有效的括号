@@ -1,0 +1,19 @@
+# https://leetcode.cn/problems/valid-parentheses/description/
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        for element in s:
+            if element == '(':
+                stack.append(')')
+            elif element == '[':
+                stack.append(']')
+            elif element == '{':
+                stack.append('}')
+            elif not stack or stack[-1] != element:
+                return False
+            else:
+                stack.pop()
+        if not stack:
+            return True
+        else:
+            return False
