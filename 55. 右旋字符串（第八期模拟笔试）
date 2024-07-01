@@ -1,0 +1,8 @@
+# https://kamacoder.com/problempage.php?pid=1065
+k = int(input())
+s = input()
+def right_rotate(k, s):
+    # k = k % len(s)
+    new = s[-k:] + s[:len(s) - k]
+    return new
+print(right_rotate(k, s))
