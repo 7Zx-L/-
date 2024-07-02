@@ -1,0 +1,35 @@
+# https://leetcode.cn/problems/top-k-frequent-elements/description/
+# 使用字典
+from collections import defaultdict
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        record = defaultdict(int)
+        for num in nums:
+            record[num] += 1
+        freq = defaultdict(list)
+        for key in record:
+            freq[record[key]].append(key)
+        sorted_freq = sorted(list(freq.keys()))
+        count = 0
+        top_k = []
+        while count != k and sorted_freq:
+            count += len(freq[sorted_freq[-1]])
+            top_k.extend(freq[sorted_freq[-1]])
+            sorted_freq.pop()
+        return top_k
+# 使用优先队列
+import heapq
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        result = [0] * k
+        frequency = {}
+        for num in nums:
+            frequency[num] = frequency.get(num, 0) + 1
+        minheap = []
+        for key, fre in frequency.items():
+            heapq.heappush(minheap, (fre, key))
+            if len(minheap) > k:
+                heapq.heappop(minheap)
+        for i in range(- 1, -k - 1, -1):
+            result[i] = heapq.heappop(minheap)[1]
+        return result
