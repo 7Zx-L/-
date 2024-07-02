@@ -1,0 +1,26 @@
+# https://leetcode.cn/problems/sliding-window-maximum/description/
+from collections import deque
+class My_Queue:
+    def __init__(self):
+        self.queue = deque()
+    def pop(self, val):
+        if self.queue and val == self.queue[0]:
+            self.queue.popleft()
+    def push(self, val):
+        while self.queue and val > self.queue[-1]:
+            self.queue.pop()
+        self.queue.append(val)
+    def get_max(self):
+        return self.queue[0]
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        que = My_Queue()
+        result = []
+        for i in range(k):
+            que.push(nums[i])
+        result.append(que.get_max())
+        for i in range(k, len(nums)):
+            que.pop(nums[i - k])
+            que.push(nums[i])
+            result.append(que.get_max())
+        return result
