@@ -1,0 +1,16 @@
+# https://leetcode.cn/problems/evaluate-reverse-polish-notation/description/
+from operator import add, sub, mul
+def div(x, y):
+    return x // y if x * y > 0 else -(abs(x) // abs(y))
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        record = []
+        operations = {'+':add, '-':sub, '*':mul, '/':div}
+        for i in tokens:
+            if i not in operations:
+                record.append(int(i))
+            else:
+                a = record.pop()
+                b = record.pop()
+                record.append(operations[i](b, a))
+        return record.pop()
