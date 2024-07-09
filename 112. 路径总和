@@ -1,0 +1,52 @@
+# https://leetcode.cn/problems/path-sum/description/
+# 记录所有可能的路径值解法
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        self.list_dis = []
+        self.distance(root, root.val)
+        if targetSum in self.list_dis:
+            return True
+        else:
+            return False
+    def distance(self, node, count):
+        if not node.left and not node.right:
+            self.list_dis.append(count)
+            return
+        if node.left:
+            count += node.left.val
+            self.distance(node.left, count)
+            count -= node.left.val
+        if node.right:
+            count += node.right.val
+            self.distance(node.right, count)
+            count -= node.right.val
+# 减法求解
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        return self.distance(root, targetSum - root.val)
+    def distance(self, node, count):
+        if not node.left and not node.right and count == 0:
+            return True
+        if not node.left and not node.right:
+            return False
+        if node.left:
+            count -= node.left.val
+            if self.distance(node.left, count):
+                return True
+            count += node.left.val
