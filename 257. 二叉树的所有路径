@@ -1,0 +1,28 @@
+# https://leetcode.cn/problems/binary-tree-paths/description/
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        if not root:
+            return []
+        path = []
+        result = []
+        self.traversal(root, path, result)
+        return result
+    def traversal(self, node, path, result):
+        path.append(node.val)
+        if not node.left and not node.right:
+            str_path = '->'.join(map(str, path))
+            result.append(str_path)
+            return
+        if node.left:
+            self.traversal(node.left, path, result)
+            path.pop()
+        if node.right:
+            self.traversal(node.right, path, result)
+            path.pop()
+        
