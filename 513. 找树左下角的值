@@ -1,0 +1,50 @@
+# https://leetcode.cn/problems/find-bottom-left-tree-value/description/
+# 层序遍历， 迭代求解
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
+        queue = collections.deque([root])
+        result = 0
+        while queue:
+            length = len(queue)
+            for i in range(length):
+                node = queue.popleft()
+                if i == 0:
+                    result = node.val
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+        return result
+# 递归法求解
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
+        self.max_depth = float('-inf')
+        self.result = 0
+        self.traverse(root, 1)
+        return self.result
+    def traverse(self, node, depth):
+        if not node.left and not node.right:
+            if depth > self.max_depth:
+                self.max_depth = depth
+                self.result = node.val
+                return
+        if node.left:
+            depth += 1
+            self.traverse(node.left, depth)
+            depth -= 1
+        if node.right:
+            depth += 1
+            self.traverse(node.right, depth)
+            depth -= 1
