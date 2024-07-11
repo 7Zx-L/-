@@ -1,0 +1,38 @@
+# https://leetcode.cn/problems/find-mode-in-binary-search-tree/description/
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def __init__(self):
+        self.result = []
+        self.maxcount = 0
+        self.count = 0
+        self.pre = None
+    def findMode(self, root: Optional[TreeNode]) -> List[int]:
+        self.result = []
+        self.maxcount = 0
+        self.count = 0
+        self.pre = None
+        
+        self.traverse(root)
+        return self.result
+    def traverse(self, node):
+        if not node:
+            return
+        self.traverse(node.left)
+        if self.pre == None:
+            self.count = 1
+        elif self.pre.val == node.val:
+            self.count += 1
+        else:
+            self.count = 1
+        self.pre =node
+        if self.count == self.maxcount:
+            self.result.append(node.val)
+        if self.count > self.maxcount:
+            self.maxcount = self.count
+            self.result = [node.val]
+        self.traverse(node.right)
