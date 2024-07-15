@@ -1,0 +1,21 @@
+# https://leetcode.cn/problems/combination-sum-iii/description/
+class Solution:
+    def __init__(self):
+        self.result = []
+        self.path = []
+    def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        self.backtracking(n, k, 1, 0)
+        return self.result
+    def backtracking(self, n, k, start, cur_sum):
+        if cur_sum > n:
+            return
+        if len(self.path) == k:
+            if cur_sum == n:
+                self.result.append(self.path[:])
+            return
+        for i in range(start, 9 - (k - len(self.path)) + 2):
+            cur_sum += i
+            self.path.append(i)
+            self.backtracking(n, k, i + 1, cur_sum)
+            cur_sum -= i
+            self.path.pop()
