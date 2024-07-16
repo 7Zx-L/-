@@ -1,0 +1,24 @@
+#  https://leetcode.cn/problems/restore-ip-addresses/
+class Solution:
+    def __init__(self):
+        self.result = []
+        self.path = []
+    def isvalid(self, s):
+        if len(s) != 1 and s[0] == '0':
+            return False
+        if int(s) >= 0 and int(s) <= 255:
+            return True
+    def backtracking(self, s, start):
+        if len(self.path) == 4 and start == len(s):
+            self.result.append('.'.join(self.path))
+            return
+        if len(self.path) > 4:
+            return
+        for i in range(start, len(s)):
+            if self.isvalid(s[start: i + 1]):
+                self.path.append(s[start: i + 1])
+                self.backtracking(s, start + len(s[start: i + 1]))
+                self.path.pop()
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        self.backtracking(s, 0)
+        return self.result
