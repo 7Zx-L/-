@@ -1,0 +1,27 @@
+# https://leetcode.cn/problems/palindrome-partitioning/description/
+class Solution:
+    def __init__(self):
+        self.result = []
+        self.path = []
+    def palindrome(self, s):
+        start, end = 0, len(s) - 1
+        while start < end:
+            if s[start] == s[end]:
+                start += 1
+                end -= 1
+            else:
+                return False
+        return True
+    def backtracking(self, s, start):
+        if start == len(s):
+            self.result.append(self.path[:])
+            return
+        for i in range(start, len(s)):
+            cut_s = s[start: i + 1]
+            if self.palindrome(cut_s):
+                self.path.append(cut_s)
+                self.backtracking(s, i + 1)
+                self.path.pop()
+    def partition(self, s: str) -> List[List[str]]:
+        self.backtracking(s, 0)
+        return self.result
