@@ -1,0 +1,16 @@
+# https://leetcode.cn/problems/subsets/description/
+class Solution:
+    def __init__(self):
+        self.result = []
+        self.path = []
+    def backtracking(self, nums, start):
+        self.result.append(self.path[:])
+        if start >= len(nums):
+            return
+        for i in range(start, len(nums)):
+            self.path.append(nums[i])
+            self.backtracking(nums, i + 1)
+            self.path.pop()
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        self.backtracking(nums, 0)
+        return self.result
