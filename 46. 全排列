@@ -1,0 +1,21 @@
+# https://leetcode.cn/problems/permutations/description/
+class Solution:
+    def __init__(self):
+        self.path = []
+        self.result = []
+    def backtracking(self, nums, used):
+        if len(self.path) == len(nums):
+            self.result.append(self.path[:])
+            return
+        for i in range(len(nums)):
+            if used[i]:
+                continue
+            used[i] = True
+            self.path.append(nums[i])
+            self.backtracking(nums, used)
+            self.path.pop()
+            used[i] = False
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        used = [False] * len(nums)
+        self.backtracking(nums, used)
+        return self.result
