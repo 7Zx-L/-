@@ -1,0 +1,36 @@
+# https://leetcode.cn/problems/n-queens/description/
+class Solution:
+    def __init__(self):
+        self.result = []
+        self.chessboard = []
+    def isvalid(self, row, col):
+        for i in range(row):
+            # check the same column
+            if self.chessboard[i][col] == 'Q':
+                return False
+        # check 对角线的时候注意，只有左上和右上需要check,因为左下和右下还没有遍历到，是不会有Q的
+        i, j = row - 1, col - 1
+        while i >= 0 and j >= 0:
+            if self.chessboard[i][j] == 'Q':
+                return False
+            i -= 1
+            j -= 1
+        i, j = row - 1, col + 1
+        while i >= 0 and j < len(self.chessboard):
+            if self.chessboard[i][j] == 'Q':
+                return False
+            i -= 1
+            j += 1
+        return True
+    def backtracking(self, n, row, col):
+        if row == n:
+            self.result.append(self.chessboard[:])
+        for col in range(n):
+            if self.isvalid(row, col):
+                self.chessboard[row] = self.chessboard[row][:col] + 'Q' + self.chessboard[row][col + 1:]
+                self.backtracking(n, row + 1, col)
+                self.chessboard[row] = self.chessboard[row][:col] + '.' + self.chessboard[row][col + 1:]
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        self.chessboard.extend(['.'* n for i in range(n)])
+        self.backtracking(n, 0, 0)
+        return self.result
