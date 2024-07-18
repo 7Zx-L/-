@@ -1,0 +1,34 @@
+# https://leetcode.cn/problems/reconstruct-itinerary/description/
+# 此作法会超时，正解在随想录
+from collections import defaultdict
+class Solution:
+    def __init__(self):
+        self.result = ['JFK']
+        self.timetable = defaultdict(list)
+        self.total_tickets = 0
+    def backtracking(self, departure, num_ticket):
+        # 结果长度比票数多一说明找齐了
+        if len(self.result) == self.total_tickets + 1:
+            return True
+        # 对照timetable，找出这个机场可以前往的全部机场，依次遍历
+        for arrival in self.timetable[departure][::-1]:
+            self.result.append(arrival)
+            self.timetable[departure].remove(arrival)
+            num_ticket -= 1
+            if self.backtracking(arrival, num_ticket):
+                return True
+            self.result.pop()
+            self.timetable[departure].append(arrival)
+            self.timetable[departure].sort(reverse=True)
+            num_ticket += 1
+        return False    
+
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        self.total_tickets = len(tickets)
+        for ticket in tickets:
+            self.timetable[ticket[0]].append(ticket[1])
+        for key in self.timetable:
+            # 有效对 dict 中每个始发地的目的地们进行降序排序
+            self.timetable[key].sort(reverse = True)
+        self.backtracking('JFK', len(tickets))
+        return self.result
