@@ -1,0 +1,15 @@
+# https://leetcode.cn/problems/assign-cookies/
+class Solution:
+    def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        g.sort(reverse=True)
+        s.sort(reverse=True)
+        requirment = ability = 0
+        count = 0
+        while ability <= len(s) - 1 and requirment <= len(g) - 1:
+            if s[ability] >= g[requirment]:
+                count += 1
+                requirment += 1
+                ability += 1
+            else:
+                requirment += 1
+        return count
