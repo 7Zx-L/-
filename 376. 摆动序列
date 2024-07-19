@@ -1,0 +1,14 @@
+# https://leetcode.cn/problems/wiggle-subsequence/description/
+class Solution:
+    def wiggleMaxLength(self, nums: List[int]) -> int:
+        if len(nums) <= 1:
+            result = len(nums)
+        elif len(nums) > 1:
+            result = 1
+            predif = curdif = 0
+            for i in range(len(nums) - 1):
+                curdif = nums[i + 1] - nums[i]
+                if curdif * predif <= 0 and curdif != 0:
+                    result += 1
+                    predif = curdif  
+        return result
