@@ -1,0 +1,14 @@
+# https://leetcode.cn/problems/gas-station/description/
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        if sum(gas) < sum(cost):
+            return -1
+        possible_start = 0
+        cur_sum = 0
+        for i in range(len(gas)):
+            rest = gas[i] - cost[i]
+            cur_sum += rest
+            if cur_sum < 0:
+                possible_start = i + 1
+                cur_sum = 0
+        return possible_start
