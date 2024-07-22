@@ -1,0 +1,16 @@
+# https://leetcode.cn/problems/jump-game-ii/description/
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        next_cover = cur_cover = 0
+        times = 0
+        for i in range(len(nums) - 1):
+            next_cover = max(next_cover, i + nums[i])
+            # if i == cur_cover 说明此时到了边界，如果再往后走哪怕一步也必须使跳跃次数加一
+            if i == cur_cover:
+                times += 1
+                # 更新新的边界
+                cur_cover = next_cover
+            # 如果更新后的边界能覆盖到最后，就不需要再跳了，输当前结果即可
+            if cur_cover >= len(nums) - 1:
+                break
+        return times
