@@ -1,0 +1,25 @@
+# https://leetcode.cn/problems/monotone-increasing-digits/description/
+# 暴力超时解法：
+class Solution:
+    def increase(self, n):
+        s = str(n)
+        if len(s) == 1:
+            return True
+        for i in range(1, len(s)):
+            if s[i] < s[i - 1]:
+                return False
+        return True
+    def monotoneIncreasingDigits(self, n: int) -> int:
+        while not self.increase(n):
+            n -= 1
+        return n
+# 贪心解法
+class Solution:
+    def monotoneIncreasingDigits(self, n: int) -> int:
+        s = list(str(n))
+        for i in range(len(s) - 1, 0, -1):
+            if s[i - 1] > s[i]:
+                s[i - 1] = str(int(s[i - 1]) - 1)
+                for j in range(i, len(s)):
+                    s[j] = '9'
+        return int(''.join(s))
