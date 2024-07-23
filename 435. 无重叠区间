@@ -1,0 +1,13 @@
+# https://leetcode.cn/problems/non-overlapping-intervals/description/
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        count = 0
+        intervals.sort(key=lambda x:x[0])
+        right = intervals[0][1]
+        for interval in intervals[1:]:
+            if interval[0] >= right:
+                right = max(right, interval[1])
+            else:
+                count += 1
+                right = min(right, interval[1])
+        return count
