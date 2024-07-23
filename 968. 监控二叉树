@@ -1,0 +1,39 @@
+# https://leetcode.cn/problems/binary-tree-cameras/description/
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+#三种状态：无摄像头被覆盖（2），有摄像头被覆盖（1）以及未被覆盖（0）
+class Solution:
+    def __init__(self):
+        self.result = 0
+    def traverse(self, root):
+        if not root:
+            return 2
+        left = self.traverse(root.left)
+        right = self.traverse(root.right)
+        # 排列组合有以下这些情况，1,0 ；0,1算作一种
+
+        # 1.无论另一边的状态，只要左右孩子中有一个是未被覆盖，父节点必然是有摄像头（1）
+        # left = 0,right = 0, return 1
+        # left = 0,right = 1, return 1
+        # left = 0,right = 2, return 1
+        if left == 0 or right == 0:
+            self.result += 1
+            return 1
+        # 2.两个孩子均不为为被覆盖，但有一个是有摄像头被覆盖（1），父节点会是2
+        # left = 1,right = 1, return 2
+        # left = 1,right = 2, return 2
+        if left == 1 or right == 1:
+            return 2
+        # 3.两个孩子均无摄像头但被覆盖，父节点必须是未被覆盖，这样父节点的父节点才会有摄像头
+        # left = 2,right = 2, return 0
+        if left == 2 and right == 2:
+            return 0
+    def minCameraCover(self, root: Optional[TreeNode]) -> int:
+        # 还有一种情况，如果父节点没有父节点怎么办，那么刚才的3处理方式就有问题了，那个时候，父节点就必须自己有摄像头了
+        if self.traverse(root) == 0:
+            self.result += 1
+        return self.result
