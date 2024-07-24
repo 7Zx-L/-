@@ -1,0 +1,19 @@
+# https://leetcode.cn/problems/fibonacci-number/description/
+# 直接用数组记录全部值
+class Solution:
+    def fib(self, n: int) -> int:
+        record = [0, 1]
+        for i in range(2, 31):
+            record.append(record[i - 1] + record[i - 2])
+        return record[n]
+# 只用长度2数组维护
+class Solution:
+    def fib(self, n: int) -> int:
+        if n == 0:
+            return 0
+        dp = [0, 1]
+        for i in range(2, n + 1):
+            total = dp[0] + dp[1]
+            dp[0] = dp[1]
+            dp[1] = total
+        return dp[1]
