@@ -1,0 +1,26 @@
+# https://kamacoder.com/problempage.php?pid=1046
+# 二维数组解法
+num, space = [int(x) for x in input().split()]
+weight = [int(x) for x in input().split()]
+value = [int(x) for x in input().split()]
+# 先是使用二维数组记录
+# dp[i][j]表示背包容量为j时，随意取下标为0至i的物品，能取到的最大价值
+def package(num, space, weight, value):
+    dp = [[0] * (space + 1) for i in range(num)]
+    # 递归关系;到物品 i 时，两种情况，放的下 i， 放不下 i
+    # dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i])
+    # 初始化,只要j 为 0，就什么都装不了
+    for i in range(num):
+        dp[i][0] = 0
+    for i in range(weight[i], space + 1):
+        dp[0][i] = value[0]
+    for i in range(1, num):
+        for j in range(space + 1):
+            if j >= weight[i]:
+                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i])
+            else:
+                # 有一点要特别注意，当j < weight[i]时，不应直接当作0
+                dp[i][j] = dp[i - 1][j]
+    return dp[-1][-1]
+print(package(num, space, weight, value))
+# 一维数组解法
