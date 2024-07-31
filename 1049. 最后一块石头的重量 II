@@ -1,0 +1,12 @@
+# https://leetcode.cn/problems/last-stone-weight-ii/
+class Solution:
+    def lastStoneWeightII(self, stones: List[int]) -> int:
+        # dp[i]表示当前背包中的重量为i
+        total = sum(stones)
+        half = total // 2
+        dp = [0] * (half + 1)
+        for stone in stones:
+            for j in range(half,stone - 1, -1):
+                dp[j] = max(dp[j], dp[j - stone] + stone)
+        left = total - dp[-1]
+        return abs(left - dp[-1])
