@@ -1,0 +1,16 @@
+# https://leetcode.cn/problems/target-sum/description/
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        total = sum(nums)
+        minus = (total - target) / 2
+        if minus < 0 or (total - target) % 2 != 0:
+            return 0
+        # 初始化,当和为0只有一种取法
+        dp = [0] * (int(minus) + 1)
+        dp[0] = 1
+        # dp[i]表示装满容量为i的背包有多少种方法
+        # 对一个数字num, dp[i] = dp[i - num]
+        for num in nums:
+            for i in range(int(minus), num - 1, -1):
+                dp[i] += dp[i - num]
+        return dp[-1]
