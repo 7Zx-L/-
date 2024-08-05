@@ -1,0 +1,14 @@
+# https://kamacoder.com/problempage.php?pid=1052
+num, space = map(int, input().split())
+weight = []
+value = []
+for _ in range(num):
+    line = input().strip()
+    weight.append(int(line.split()[0]))
+    value.append(int(line.split()[1]))
+dp = [0] * (space + 1)
+# dp[i]表示容量为i的背包能装的最大价值为 dp[i]
+for i in range(num):
+    for j in range(weight[i], space + 1):
+        dp[j] = max(dp[j], dp[j - weight[i]] + value[i])
+print(dp[-1])
