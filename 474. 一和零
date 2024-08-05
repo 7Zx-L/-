@@ -1,0 +1,12 @@
+# https://leetcode.cn/problems/ones-and-zeroes/description/
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        # dp[i][j]表示i个0，j个1的子集数
+        dp = [[0] * (n + 1) for i in range(m + 1)]
+        for s in strs:
+            num_0 = s.count('0')
+            num_1 = len(s) - num_0
+            for i in range(m, num_0 - 1, -1):
+                for j in range(n, num_1 - 1, -1):
+                    dp[i][j] = max(dp[i][j], dp[i - num_0][j - num_1] + 1)
+        return dp[m][n]
