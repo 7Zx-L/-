@@ -1,0 +1,10 @@
+# https://leetcode.cn/problems/coin-change-ii/description/
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        # dp[i]表示凑成总金额为i的组合数有dp[i]种
+        dp = [0] * (amount + 1)
+        dp[0] = 1
+        for coin in coins:
+            for j in range(coin, amount + 1):
+                dp[j] += dp[j - coin]
+        return dp[amount]
